@@ -1,0 +1,149 @@
+{% extends 'monitor/main.html' %}
+{%load static%}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+     {% block title %}<title>LanDocs WebApp</title>{% endblock %}
+    <style>
+
+  </style>
+
+    <link href="{% static 'monitor/css/bar.css' %}" rel="stylesheet">
+
+    <link href="{% static 'monitor/css/form1.css' %}" rel="stylesheet">
+</head>
+<body>
+{% block content %}
+{% include 'monitor/newbar.html' %}
+{% block js %}
+
+
+{% endblock %}
+<!-- Page content -->
+{% block chart %}
+    {% for a in model %}
+    <figure class="highcharts-figure" style="display: inline-block;margin-left: 350px">
+    <div id='{{ a.id }}'></div>
+    <p class="highcharts-description">
+        Basic line chart showing trends in a dataset. This chart includes the
+        <code>series-label</code> module, which adds a label to each line for
+        enhanced readability.
+    </p>
+</figure>
+        <script type="text/javascript" src="{% static "monitor/js/main.js" %}"></script>
+        <script  type = "text/javascript" src="{% static 'monitor/js/higcharts/highcharts.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/accessibility.js' %}"></script>
+        <script  type = "text/javascript"src="{% static 'monitor/js/higcharts/export-data.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/exporting.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/data.js' %}"></script>
+        <script>
+
+
+
+        Highcharts.chart('{{a.id}}', {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: 'USD to EUR exchange rate over time'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                categories: [1,2,3]
+            },
+            yAxis: {
+                title: {
+                    text: 'Exchange rate'
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[1]],
+                            [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(2).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 10
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            series: [{
+                type: 'area',
+                name: 'CPU',
+                data: {{ a.cpu|safe }}
+            },
+                {
+                type: 'area',
+                name: 'mem',
+                data: {{ a.mem|safe }}
+            },
+                {
+                type: 'area',
+                name: 'CPU',
+                data: {{ a.mem|safe }}
+            }
+
+            ],
+             responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                },
+                plotOptions: {
+                    series: {
+                        marker: {
+                            radius: 2.5
+                        }
+                    }
+                }
+            }
+        }]
+    }
+        });
+
+  </script><br>
+
+     {% endfor %}
+
+        {% endblock %}
+
+<noscript>
+    <strong>Извините, приложение не может работать без включенного JavaScript. Пожалуйста, включите эту возможность!</strong>
+</noscript>
+<div class="splash"></div>
+{% endblock%}
+</body>
+</html>

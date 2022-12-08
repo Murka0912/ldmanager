@@ -1,0 +1,42 @@
+{% extends "monitor/main.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link href="{% static 'monitor/css/1.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/bar.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/3.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/form1.css' %}" rel="stylesheet">
+<link href="{% static 'monitor/css/2.css' %}" rel="stylesheet">
+</head>
+
+<body>
+{% block content %}
+    {% load mathfilters %}
+    <div id="nav-sidebar">
+    {% include 'monitor/navbar.html' %}
+    </div>
+    <script type="text/javascript" src="{% static "monitor/js/main.js" %}"></script>
+<script>
+function autorefresh() {
+        // auto refresh page after 1 second
+        setInterval('refreshPage()', 1000);
+}
+
+function refreshPage() {
+        $.ajax({
+        url: '{% url 'res' %}',
+        success: function(data) {
+        $('#console').html(data);
+        }
+    });
+}
+</script>
+
+
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{%  static 'monitor/css/newbar.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/js/main.js' %}" rel="script">
+    <link href="{% static 'monitor/js/newbar.js' %}" rel="script">
+
+</head>
+<body>
+
+
+<script src="{% static 'monitor/js/824f90b62c.js' %}"></script>
+<!-- Contenedor -->
+<div class="backgroud_q">
+<div id="accordion" class="accordion">
+    <ul id="accordion">
+        <li><div class="logo1"><img src="{% static 'monitor/img/1231.png' %}"><h1></h1></div></li>
+
+        <li>
+            <div class="link"><i class="fa fa-home" style="color: #bcdfeb"></i><a href="{% url 'addsrv' %}">Главная страница</a></div>
+        </li>
+    <li>
+        <div class="link"><i class="fa fa-database" style="color: #bcdfeb"></i>Базы данных<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+        <ul class="submenu">
+        <li><a href="{% url 'listdb' %}">Сервера СУБД</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-server" style="color: #bcdfeb"></i>Сервера<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      {% for Node in cat %}
+      <li><a href="{% url 'res' Node.slug %}">{{ Node.name }}</a></li>
+        {% endfor %}
+        <li><a href="{% url 'download' %}">экспорт данных</a></li>
+      <li><a href="{% url 'listsrv' %}">Список серверов</a></li>
+      <li><a href="{% url 'services' %}">Управление службами</a></li>
+        <li><a href="{% url 'synthec' %}">Сводка по времени работы</a></li>
+
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-cogs" style = "color: #bcdfeb"></i>Настройки<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      <li><a href="{% url 'logs' %}">Logs</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-user" style="color: #bcdfeb"></i>Профиль<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+
+      <li><a href="/admin/">Админка</a></li>
+      <li><a href="{% url 'password_change' %}">Смена пароля</a></li>
+      <li><a href="{% url 'login' %}">Выход</a></li>
+    </ul>
+  </li>
+
+</ul>
+    </div>
+    </div>
+<script src="{% static 'monitor/js/jquery.min.js' %}"></script>
+<script src="{% static 'monitor/js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'monitor/js/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'monitor/js/newbar.js' %}"></script>
+
+</body>
+</html>

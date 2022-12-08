@@ -1,0 +1,18 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+{% block content %}
+    {% include 'monitor/newbar.html' %}\
+    <table class="table_new" style="position: relative; margin-left: 350px"><thead>
+    <th style="width: 30px">id</th>
+    <th style="width: 100px">Время</th>
+    <th>Текст</th>
+    </thead>
+    <tbody>
+    {% for a in logs %}
+        <tr><td>{{ a.id }}</td>
+            <td>{{ a.date }}</td>
+        <td>{{ a.text }}</td></tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

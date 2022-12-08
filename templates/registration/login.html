@@ -1,0 +1,34 @@
+{% extends "monitor/main.html" %}
+{% load static %}
+{% block content %}
+<div style="position: center; margin-left: 30%"><img src= "{%static "monitor/img/logo1.png"%}" alt="photo" style="position: center; width: 700px; "></div>
+
+
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+<form class="transparent" style="background-color: #2e6da4" method="post" action="{% url 'login' %}" >
+    {% csrf_token %}
+    <div  class="form-inner">
+        <label for="username">{{ form.username.label_tag }}</label>
+        <input type="text" id="username" src="{{ form.username }}
+        <label for="password">{{ form.password.label_tag }} </label>
+        <input type="password" id="password" src="{{ form.password }}
+        <input type="submit" value="Войти" />
+        <input type="hidden" name="next" value="{{ next }}"/>
+    </div>
+
+</form>
+{% if form.errors %}
+  <p style="margin-left: 33%;font-size: 24px; color: darkred; font-family: 'Consolas', 'Monaco', 'Bitstream Vera Sans Mono', monospace">Логин и пароль введен неверно, либо не существует.</p>
+{% endif %}
+{# Assumes you setup the password_reset view in your URLconf #}
+
+{% endblock %}

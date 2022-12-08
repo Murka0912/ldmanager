@@ -1,0 +1,262 @@
+{%load static%}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+     {% block title %}<title>LanDocs WebApp</title>{% endblock %}
+
+    <style>
+        *{margin:0;padding:0;}
+          #app{
+              background:#ccc;
+              }
+           .header{
+            width:100%;
+            margin-bottom:30px;
+                  }
+            .content{
+             padding-left:30px;
+                    }
+             .row1{
+    height:60px;line-height:60px;margin:10px 0;
+  }
+  .eltable1{
+    overflow: scroll;
+  }
+        h1{margin-left: 5%}
+        body {
+                 background-image: url("{% static 'monitor/img/fon1.jpg' %}"); /* Путь к фоновому изображению */
+                 background-attachment: fixed;
+                -webkit-transition: all 0.3s ease;;
+                -moz-transition: all 0.3s ease;;
+                -o-transition: all 0.3s ease;;
+                transition: all 0.3s ease;
+            }
+
+        .button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left:30% ;
+  margin-bottom: 20%;
+    }
+ input {
+    border-color: #00adff;
+}
+
+
+  </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.js"></script>
+    <script type="text/javascript">var path="js/";const arr=["login"]</script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'monitor/img/1231.png' %}">
+    <link href="{% static 'monitor/css/table.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/1.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/bar.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/3.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/form1.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/charts.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/newbar.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/switch.css' %}" rel="stylesheet">
+    <link href="{%  static 'monitor/css/newbar.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/js/main.js' %}" rel="script">
+    <link href="{% static 'monitor/js/newbar.js' %}" rel="script">
+{% verbatim %}
+<script type="text/x-template" id="grid-template">
+      <table>
+        <thead>
+          <tr>
+            <th v-for="key in columns"
+              @click="sortBy(key)"
+              :class="{ active: sortKey == key }">
+              {{ capitalize(key) }}
+              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in filteredHeroes">
+            <td v-for="key in columns">
+              {{ entry[key] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </script>
+{% endverbatim %}
+
+</head>
+<body>
+{% block content %}
+<script type="application/json" src="{% static 'monitor/js/824f90b62c.js' %}"></script>
+<!-- Contenedor -->
+<div class="backgroud_q">
+<div id="accordion" class="accordion">
+    <ul id="accordion">
+        <li><div class="logo1"><img src="{% static 'monitor/img/1231.png' %}"><h1></h1></div></li>
+
+        <li>
+            <div class="link"><i class="fa fa-home" style="color: #bcdfeb"></i><a href="{% url 'addsrv' %}">Главная страница</a></div>
+        </li>
+    <li>
+        <div class="link"><i class="fa fa-database" style="color: #bcdfeb"></i>Базы данных<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+        <ul class="submenu">
+        <li><a href="{% url 'listdb' %}">Сервера СУБД</a></li>
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-server" style="color: #bcdfeb"></i>Сервера<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+        {% for Node in cat %}
+      <li><a href="{% url 'res' Node.slug %}">{{ Node.name }}</a></li>
+        {% endfor %}
+        <li><a href="{% url 'download' %}">экспорт данных</a></li>
+      <li><a href="{% url 'listsrv' %}">Список серверов</a></li>
+      <li><a href="{% url 'services' %}">Управление службами</a></li>
+        <li><a href="{% url 'synthec' %}">Сводка по времени работы</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-cogs" style = "color: #bcdfeb"></i>Настройки<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      <li><a href="{% url 'logs' %}">Logs</a></li>
+      <li><a href="{% url 'srvform' %}">Desktop</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-user" style="color: #bcdfeb"></i>Профиль<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      <li><a href="/admin/">Админка</a></li>
+      <li><a href="{% url 'password_change' %}">Смена пароля</a></li>
+      <li><a href="{% url 'login' %}">Выход</a></li>
+        <li><a href="{% url 'medo' %}">medo</a></li>
+    </ul>
+  </li>
+
+</ul>
+    </div>
+    </div>
+<script type="application/javascript" src="{% static 'monitor/js/jquery.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'monitor/js/popper.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'monitor/js/jquery-1.11.1.min.js' %}"></script>
+<script type="application/javascript" src="{% static 'monitor/js/newbar.js' %}"></script>
+{% block js %}
+
+    <div>
+        <form method="post" class="transparent" id="srvadd" style="max-width: 500px; background-color: #2e6da4">
+        <div class="form-inner" >
+            {% csrf_token %}
+            <label>Добавление группы серверов</label>
+            {{form4.name}}
+            <input type="submit" value="Добавить категорию" />
+        </div>
+        </form>
+    </div>
+
+
+
+<div>
+        <form method="post" class="transparent" id="srvadd" style="max-width: 500px; background-color: #2e6da4">
+        <div class="form-inner" >
+            {% csrf_token %}
+            <label>Добавление сервера</label>
+            {{ form.servaddr }}
+            {{ form.login }}
+            {{ form.paswd }}
+            {{ form.cat }}
+            <input type="submit" value="Добавить сервер" />
+        </div>
+        </form>
+    </div>
+
+
+
+
+   <div>
+    <form method="post" class="transparent" id="subdadd" style="max-width: 500px; background-color: #2e6da4">
+        <div class="form-inner">
+            {% csrf_token %}
+            <label>Добавление сервера СУБД</label>
+            {{ form1.subdaddr }}
+            {{ form1.username }}
+            {{ form1.password }}
+            <div id="modal_popup">
+            <input type="submit" value="Добавить сервер" />
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <div>
+    <form method="post" class="transparent" id="add_url" style="max-width: 500px; background-color: #2e6da4">
+        <div class="form-inner">
+            {% csrf_token %}
+            <label>Добавление адреса веб клиента</label>
+            {{ form2.url }}
+            {{ form2.login }}
+            {{ form2.passwd }}
+            <div id="modal_popup">
+            <input type="submit" value="Добавить url" />
+            </div>
+        </div>
+        </form>
+    </div>
+ <div>
+    <form method="post" class="transparent" id="add_url" style="max-width: 500px; background-color: #2e6da4">
+        <div class="form-inner">
+            {% csrf_token %}
+            <label>Добавление url метода</label>
+            {{ form3.name_method }}
+            {{ form3.method }}
+            <div id="modal_popup">
+            <input type="submit" value="Добавить метод" />
+            </div>
+        </div>
+        </form>
+    </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $(function() {
+    $( "#modal_popup" ).dialog({
+      autoOpen: false,
+      height: 140,
+      modal: true,
+      title: "The title of your modal popup",
+      open: function(){
+        $( "#modal_popup" ).append("The text that you want in the modal.");
+      }
+    });
+  });
+  $( "#submit_id" ).click(function(){ $( "#modal_popup" ).dialog('open'); });
+});
+</script>
+
+    <script type="text/javascript" src="{% static 'monitor/js/ionicons.js' %}"></script>
+    <script type="module" src="{% static 'monitor/js/ionicons.esm.js' %}"></script>
+<a style="margin-left: 500px; font-size: 20px" href="{% url 'call_proc' %}">НАЖМИ МЕНЯ</a>
+{% endblock %}
+<!-- Page content -->
+<noscript>
+    <strong>Извините, приложение не может работать без включенного JavaScript. Пожалуйста, включите эту возможность!</strong>
+</noscript>
+<div class="splash"></div>
+{% endblock%}
+
+<script src="{% static 'monitor/js/test_app.js' %}"></script>
+<script src="{% static 'monitor/js/table.js' %}"></script>
+</body>
+</html>

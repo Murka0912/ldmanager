@@ -1,0 +1,114 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+{% block content %}
+    {% include 'monitor/newbar.html' %}
+
+<script src="{% static 'monitor/js/higcharts/highcharts.js' %}"></script>
+<script src="{% static 'monitor/js/higcharts/exporting.js' %}"></script>
+<script src="{% static 'monitor/js/higcharts/export-data.js' %}"></script>
+<script src="{% static 'monitor/js/higcharts/accessibility.js' %}"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+
+    </p>
+</figure>
+
+<table class="table_new" style="margin-left: 350px">
+<thead>
+<th>Наименование метода</th>
+<th>Затраченное время</th>
+<th> Дата выполнения</th>
+</thead>
+<tbody>
+
+    {% for a in SynthData %}
+        <tr>
+
+    <td>{{ a.name_method1}}</td>
+
+        <td>{{ a.exec_time }}</td>
+        <td>{{ a.exec_date }}</td>
+        </tr>
+    {% endfor %}
+
+</tbody>
+</table>
+
+
+
+<script type="text/javascript" src="{% static "monitor/js/main.js" %}"></script>
+        <script  type = "text/javascript" src="{% static 'monitor/js/higcharts/highcharts.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/accessibility.js' %}"></script>
+        <script  type = "text/javascript"src="{% static 'monitor/js/higcharts/export-data.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/exporting.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/data.js' %}"></script>
+        <script>
+
+
+        Highcharts.chart('container', {
+
+    title: {
+        text: 'График производительности {{ urlData.url }}'
+    },
+
+
+    yAxis: {
+        title: {
+            text: 'Показатели метрик'
+        }
+    },
+
+    xAxis: {
+        categories:{{ dates|safe }}
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+
+
+    series: [
+
+
+        {%  for key, value in xdata.items %}
+
+        {
+
+        name: '{{ key }}',
+
+        data: {{ value }}
+
+
+    },{% endfor %}
+
+
+
+
+    ],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 1000
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+}  )
+        ;
+        </script>
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+
+{% block content %}
+    {% include 'monitor/newbar.html' %}
+
+
+<form method="post" class="transparent" id="settings" style="max-width: 700px; background-color: #2e6da4">
+        <div class="form-inner">
+            {% csrf_token %}
+            <label>Обновление настроек приложения</label>
+            {{ set_form.update_period}}
+
+            <input type="submit" value="Обновить настройки" />
+            <div>
+                <a href="javascript:PopUpShow()" >Запуск обновления метрик</a>
+                <link href="" rel="script">
+                </div>
+                {% for a in set %}
+                <label>Время обновления:      {{ a.date_update }}</label>
+                <label>Установленное время обновления метрик:   {{ a.update_period }} сек</label>
+                {% endfor %}
+
+            <a href="javascript:PopUpShow1()" style="background-color: #ba2121; color: white">очистка данных</a>
+
+
+
+
+        </div>
+        </form>
+
+<div class="b-popup" id="popup1">
+    <div class="b-popup-content" style="text-align: center;">
+        При нажатии кнопки ДА, запуститься фоновый сбор метрик
+        <a href="{% url 'start' %}" onclick="PopUpHide()">Да</a>
+    <a href="javascript:PopUpHide()" style="background-color: red; color: #bcdfeb">Нет</a>
+    </div>
+</div>
+    <div class="b-popup" id="popup2">
+    <div class="b-popup-content" style="text-align: center;">
+        are you sure?
+    <a href="javascript:PopUpHide1()">Hide popup</a>
+    </div>
+</div>
+
+<script src="{% static 'monitor/js/jquery-2.0.2.min.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        //Скрыть PopUp при загрузке страницы
+        PopUpHide();
+        PopUpHide1();
+    });
+    //Функция отображения PopUp
+    function PopUpShow(){
+        $("#popup1").show();
+    }
+    //Функция скрытия PopUp
+    function PopUpHide(){
+        $("#popup1").hide();
+    }
+    function PopUpShow1(){
+        $("#popup2").show();
+    }
+    function PopUpHide1(){
+        $("#popup2").hide();
+    }
+</script>
+{% endblock %}

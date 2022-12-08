@@ -1,0 +1,51 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+{% block content %}
+    {% include 'monitor/newbar.html' %}
+    {% for i in srv %}
+
+
+
+<form method="POST" action="#">
+{% csrf_token %}
+<div class="details" >
+
+    <details>
+
+<summary data-name="srvaddr">Службы сервера {{ i.servaddr|upper }}</summary>
+
+
+<div style="position: relative; font-size: 20px;color: #24242a">
+<table data-method="POST" class="table_new" id="myTable">
+    <thead><tr><th>Check</th><th>Имя сервера</th><th>Имя службы</th><th>Состояние</th></tr></thead>
+
+    {% for a in service %}
+        <tbody><tr><td><input type="checkbox" name="check" ></td>
+            <td>{{ a.2 }}<td>
+            <select name="service_name" required><option value="{{ a.0 }}"> {{ a.0 }}</option></select></td>
+            <td>{{ a.1 }}
+
+    <select name="choiceuse" required>
+        <option value="restart"> restart</option>
+        <option value="stop" name="stop">stop</option>
+        <option value="start">start</option>
+    </select>
+        <input type="submit" value="OK" formaction="{% url 'manageservices' %}">
+</td></tr></tbody>
+
+
+    {% endfor %}
+</table>
+</div>
+
+
+
+        </details>
+</div>
+</form>
+       <script>
+       console.log('{{ i.servaddr }}')
+       </script>
+{% endfor %}
+
+{% endblock %}

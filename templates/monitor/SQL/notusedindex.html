@@ -1,0 +1,26 @@
+{% extends "monitor/main.html" %}
+{% load static %}
+<style>
+
+</style>
+{% block content %}
+    {% include 'monitor/navbar.html' %}
+    <div class="table_new">
+    <h1 align="center" style="text-transform: uppercase">{{ srvaddr }}</h1>
+        <h1>{{ text }}</h1>
+<table class="table_new">
+<thead><th>DatabaseName</th><th>TableName</th><th>IndexName</th><th>user_updates</th><th>system_updates</th><th>Rename</th><th>Disable</th></thead>
+    {% for a in delay1 %}
+        <tbody>
+        <tr><td>{{ a.0 }}</td>
+        <td>{{ a.1 }}</td>
+        <td>{{ a.2 }}</td>
+        <td>{{ a.3 }}</td>
+        <td>{{ a.4 }}</td>
+        <td>{{ a.5 }}</td>
+        <td>{{ a.6 }}</td></tr></tbody>
+    {% endfor %}
+
+</table>
+    </div>
+{% endblock %}

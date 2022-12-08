@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link href="{% static 'monitor/css/1.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/bar.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/3.css' %}" rel="stylesheet">
+    <link href="{% static 'monitor/css/form1.css' %}" rel="stylesheet">
+<link href="{% static 'monitor/css/2.css' %}" rel="stylesheet">
+</head>
+<body>
+ <div class="navbar">
+  <a href="{% url 'res' 1 %}">Home</a>
+  <div class="dropdown">
+  <button class="dropbtn">SQl monitor
+      <i class="fa fa-caret-down"></i>
+  </button>
+      <div class="dropdown-content">
+          <a href="{% url 'listdb' %}">Сервера СУБД</a>
+
+      </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn" href="{% url 'result' %}">Серверы
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a id="btn1" href="{% url 'res' 1 %}">Производительность</a>
+      <a href="{% url 'listsrv' %}">Список серверов</a>
+      <a href="{% url 'srvform' %}">Link 3</a>
+        <a href="{% url 'addsrv' %}">Добавление серверов</a>
+    </div>
+  </div>
+    <div class="dropdown">
+        <button  class="dropbtn">Профиль
+            <i class="fa fa-caret-down "></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="/admin/">Admin</a>
+            <a href="{% url 'login' %}">выход</a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

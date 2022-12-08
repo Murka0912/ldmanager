@@ -1,0 +1,90 @@
+
+{% Load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Addsrv</title>
+</head>
+<>
+<body>
+<details>
+       <summary>Наименования бд</summary>
+       <table>
+    <tr>
+        <th>name</th>
+        <th>dbid</th>
+        <th>createdate</th>
+    </tr>
+    {% for n in dbname %}
+        <tr>
+            <td>{{ n.0 }}</td>
+            <td>{{ n.1 }}</td>
+            <td>{{ n.2 }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+</details>
+<table style="margin-left: 1%">
+        <tr>
+        <th>1</th>
+        <th>2</th>
+            <th>3</th>
+            <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th></tr>
+    {% for obj in sql %}
+        <tr>
+        <td>{{ obj.0 }}</td>
+        <td>{{ obj.1 }}</td>
+        <td>{{ obj.2 }}</td>
+        <td>{{ obj.3 }}</td>
+        <td>{{ obj.4 }}</td>
+        <td>{{ obj.5 }}</td>
+        <td>{{ obj.6 }}</td>
+        <td>{{ obj.7 }}</td>
+        </tr>
+
+    {% endfor %}
+    <table style="margin-left: 1%">
+        <tr>
+        <th>Wait type</th>
+        <th>wait (s)</th>
+            <th>% waiting</th>
+            </tr>
+    {% for s in delay %}
+            <tr>
+            <td>{{ s.0 }}</td>
+                <td>{{ s.1 }}</td>
+                <td>{{ s.2 }}</td>
+
+            </tr>
+    {% endfor %}
+</table>
+
+    <table style="margin-left: 1%">
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+
+        </tr>
+    {% for d in loadque %}
+        <tr>
+            <td>{{ d.0 }}</td>
+            <td>{{ d.1 }}</td>
+            <td>{{ d.2 }}</td>
+            <td>{{ d.3 }}</td>
+            <td>{{ d.4 }}</td>
+            <td>{{ d.5 }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

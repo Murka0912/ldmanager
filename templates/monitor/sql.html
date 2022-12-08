@@ -1,0 +1,117 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL monitor</title>
+
+</head>
+
+<style>
+
+    </style>
+<body>
+{% block content %}
+<div class="backgroud_q">
+<div id="accordion" class="accordion">
+    <ul id="accordion">
+        <li><div class="logo1"><img src="{% static 'monitor/img/1231.png' %}"><h1></h1></div></li>
+
+
+    <li>
+        <div class="link"><i class="fa fa-database" style="color: #bcdfeb"></i>Базы данных<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+        <ul class="submenu">
+         {% for a in dblist %}
+        <li><a href="{% url 'subd-detail' a.id %}">{{ a.subdaddr }}</a></li>
+            {% endfor %}
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-server" style="color: #bcdfeb"></i>Сервера<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      <li><a href="{% url 'addsrv' %}">Добавление серверов</a></li>
+      <li><a href="{% url 'listsrv' %}">Список серверов</a></li>
+      <li><a href="{% url 'services' %}">Управление службами</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-cogs" style = "color: #bcdfeb"></i>Настройки<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      <li><a href="{% url 'srvform' %}">Tablet</a></li>
+      <li><a href="#">Mobile</a></li>
+      <li><a href="#">Desktop</a></li>
+    </ul>
+  </li>
+  <li>
+    <div class="link"><i class="fa fa-user" style="color: #bcdfeb"></i>Профиль<i class="fa fa-chevron-down" style="color: #bcdfeb"></i></div>
+    <ul class="submenu">
+      <li><a href="/admin/">Админка</a></li>
+      <li><a href="{% url 'password_change' %}">Смена пароля</a></li>
+      <li><a href="{% url 'login' %}">Выход</a></li>
+    </ul>
+  </li>
+
+</ul>
+    </div>
+    </div>
+    <script src="{% static 'monitor/js/main.js' %}"></script>
+
+
+
+
+
+    <form id="myForm" class="transparent" method="post" action="{% url 'que' %}">
+    {% csrf_token %}
+    <div  class="form-inner">
+    <h1 align="center">Выбор БД и запроса</h1>
+    <select  name="srvaddr" required>
+        <option value="{{ subd.subdaddr }}">{{ subd.subdaddr }}</option>
+    </select>
+
+  <div ><label>Выбор БД:</label><select name="choice_bd" required >
+    <option value="">Выбор БД</option>
+          {% for g in usedb %}
+      {% if g.subd == subd.subdaddr %}
+
+          <option value="{{ g.namedb }}" name="dblist">{{ g.namedb }}</option>
+
+      {% endif %}
+{% endfor %}
+  </select></div>
+    <div ><label>Выбор запроса:</label><select name="choice_query"  required>
+<option style="padding: 2%">Выбор запроса</option>
+<option value="indexes" name="index">Фрагментация индексов</option>
+        <option value="delay" name="waits">Задержки</option>
+    <option value="loadque" name="topque">Топ запросы</option>
+        <option value="status" name="status">Что происходит на сервере</option>
+        <option value="indexcount" name="indexcount">Итоговое число отсутствующих индексов для каждой базы данных</option>
+        <option value="notindexload" name="notindexload">Отсутствующие индексы, вызывающие издержки</option>
+        <option value="notusedindex" name="notusedindex">Не используемые индексы</option>
+        <option value="in_out_queries" name="in_out_queries">Запросы с высокими издержками на ввод-вывод</option>
+        <option value="cpu_use" name="cpu_use">Запросы с высоким использованием ресурсов ЦП</option>
+        <option value="blocked_queries" name="blocked_queries">Запросы, страдающие от блокировки</option>
+        <option value="in_out_load" name="in_out_load">нагрузку на подсистему ввода-вывода</option>
+        <option value="who_cpu" name="who_cpu">Какой процессор что делает</option>
+        <option value="control" name="control">контроль "несжатости"</option>
+        <option value="operation_statistic" name="operation_statistic">статистика по операциям в БД</option>
+        <option value="update_date_stat" name="update_date_stat">дата обновления статиститки</option>
+        <option value="in_out_file_load" name="in_out_file_load">i/o-нагрузка на файлы</option>
+        <option value="in_out_disk_load" name="in_out_disk_load">i/o-нагрузка на диски</option>
+        <option value="disk_usage" name="disk_usage">Занимаемое место на диске</option>
+        <option value="memory_objects" name="memory_objects">под какие объекты выделена память</option>
+    </select></div>
+  <input type="submit" value="Выполнить запрос">
+    </div>
+</form>
+    <script src="{% static 'monitor/js/jquery.min.js' %}"></script>
+<script src="{% static 'monitor/js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'monitor/js/jquery-1.11.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'monitor/js/newbar.js' %}"></script>
+    <script src="{% static 'monitor/js/824f90b62c.js' %}"></script>
+
+{% endblock %}
+
+</body>
+</html>

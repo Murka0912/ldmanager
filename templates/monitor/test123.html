@@ -1,0 +1,70 @@
+{% extends 'monitor/main.html' %}
+{% block content %}
+{% include 'monitor/newbar.html' %}
+{% verbatim %}
+<template>
+  <div id="app">
+    <el-container>
+      <el-header class="header">
+
+                 <! - Вот мой кастомный компонент! Не копировать ->
+      </el-header>
+      <el-main class="content">
+        <el-row class="row1">
+                     <el-col: span = "2"> Идентификатор поиска </el-col>
+          <el-col :span="6">
+                         <el-input v-model = "inputId" placeholder = "Введите содержимое"> </el-input>
+          </el-col>
+          <el-col :span="1">&nbsp;</el-col>
+                     <el-col: span = "2"> Ключевые слова для поиска </el-col>
+          <el-col :span="6">
+                         <el-input v-model = "inputName" placeholder = "Введите содержимое"> </el-input>
+          </el-col>
+          <el-col :span="1">&nbsp;</el-col>
+                     <el-col: span = "2"> Гендерный анализ </el-col>
+          <el-col :span="3">
+                         <el-select v-model = "value" placeholder = "Выберите пол">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-table
+          :data="studentsNewList"
+          style="width:95%"
+          class="eltable1">
+          <el-table-column
+            prop="id"
+            label="ID"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+                         label = "имя"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="sex"
+                         label = "Пол"
+            width="180">
+          </el-table-column>
+          <el-table-column
+            prop="ctime"
+                         label = "Время создания">
+          </el-table-column>
+        </el-table>
+      </el-main>
+    </el-container>
+  </div>
+</template>
+<div id="table1">
+re
+</div>
+{% endverbatim %}
+<script src="/untitled10/apps/monitor/static/monitor/js/table.js"></script>
+{% endblock %}
+

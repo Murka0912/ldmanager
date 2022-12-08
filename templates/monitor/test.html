@@ -1,0 +1,52 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+{% block content %}
+{% include 'monitor/newbar.html' %}
+{% for h in res1 %}
+<div class="srvform" id="console" style="margin-left: 30%; width: 700px">
+    <form  class="transparent" method="get" style = "background-color: #2a2a2a; margin-left: 5%; width: 700px">
+        <label style="margin-left: 30%; font-size: 16px; text-transform: uppercase; color: #00adff" >{{ h.srvaddr }}</label>
+    {% csrf_token %}
+    <div  class="form-inner">
+
+
+        <label style="color: red" >CPU: {{ h.cpu }}</label><br>
+        <label >Время работы: {{ h.uptime }} </label><br>
+        <label>Всего ОЗУ: {{ h.allmem|floatformat:3 }}</label><br>
+        <label>Доступная память: {{ h.mem }}</label><br>
+        <label>% использованной памяти: {{ h.percmem }}</label><br>
+        <label>Дата: {{ h.data }}</label><br>
+            <table  class="table_new" style = "margin-left: 5px; border-color: #bcdfeb; color: white;font-size: 15px;  border-radius: 10%" border="0">
+                <tr >
+                <th>name disk</th>
+                <th>free space</th>
+                 <th>all mem</th>
+                </tr>
+
+                 {% for g in mem %}
+                     <tr>
+                     {% if g.srvaddr == h.srvaddr %}
+
+
+                     <td style="color: #1b1e21">{{ g.namedisk }}</td>
+                         <td style="color: #1b1e21">{{ g.freespace }} Gb</td>
+                         <td style="color: #1b1e21">{{ g.allspace }} Gb</td>
+                         <td style="color: #1b1e21">{{ g.date_up.astimezone }}</td>
+
+                    {% endif %}
+                     </tr>
+
+
+                {% endfor %}
+
+                </table>
+        <a href="{% url 'res-detail' h.server_id %}"> Подробности </a>
+    </div>
+
+    </form>
+
+</div>
+
+
+{% endfor %}
+{% endblock %}

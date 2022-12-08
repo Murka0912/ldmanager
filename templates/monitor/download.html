@@ -1,0 +1,23 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+{% block content %}
+    {% include 'monitor/newbar.html' %}
+    <div>
+    <form method="post" class="transparent" id="settings" style="max-width: 700px; background-color: #2e6da4">
+        <div class="form-inner">
+            {% csrf_token %}
+            <label>Скачать информацию о дисках</label>
+
+
+            {% for a in cat %}
+    <a style="font-size: 20px; color: #2a2a2a" href="{% url 'export' a.id a.name %}">{{ a.name }}</a>
+    {% endfor %}
+
+
+
+
+        </div>
+        </form>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'monitor/main.html' %}
+{% load static %}
+{% block content %}
+    {% include 'monitor/newbar.html' %}
+{% block chart %}
+
+
+    <figure class="highcharts-figure" style="width: 1200px; margin-left: 30%">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        График производительности
+
+    </p>
+
+</figure>
+{% if pref.id == monk.srv_id %}
+    {% endif %}
+    {% endblock %}
+    {% block js_chart %}
+        <script type="text/javascript" src="{% static "monitor/js/main.js" %}"></script>
+        <script  type = "text/javascript" src="{% static 'monitor/js/higcharts/highcharts.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/accessibility.js' %}"></script>
+        <script  type = "text/javascript"src="{% static 'monitor/js/higcharts/export-data.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/exporting.js' %}"></script>
+        <script type = "text/javascript" src="{% static 'monitor/js/higcharts/data.js' %}"></script>
+        <script>
+
+
+        Highcharts.chart('container', {
+
+    title: {
+        text: 'График производительности {{ namesrv }}'
+    },
+
+
+    yAxis: {
+        title: {
+            text: 'Показатели метрик'
+        }
+    },
+
+    xAxis: {
+        categories:{{ date|safe }}
+    },
+
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle'
+    },
+
+
+
+    series: [
+        {
+        name: 'CPU',
+        data: {{ cpu|safe }}
+    },
+
+    {
+        name: '% памяти',
+        data: {{ mem|safe }}
+    },
+        {
+        name: 'память',
+        data: {{ mum|safe }}
+    },
+
+        {%  for key, value in free.items %}
+
+        {
+
+        name: '{{ key }}',
+
+        data: {{ value }}
+
+
+    },{% endfor %}
+
+
+
+
+    ],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 1000
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+
+}  )
+        ;
+        </script>
+
+
+
+
+        <textarea class="details1" style="background-color:#93caac;margin-left: 350px; width:90%; min-height: 40% ">{{ log }}</textarea>
+
+
+        {% endblock %}
+
+{% endblock %}
